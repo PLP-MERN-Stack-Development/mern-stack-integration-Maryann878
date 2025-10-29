@@ -1,73 +1,165 @@
-# MERN Stack Integration Assignment
+# MERN Stack Blog Application
 
 This assignment focuses on building a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application that demonstrates seamless integration between front-end and back-end components.
 
-## Assignment Overview
+## Table of Contents
 
-You will build a blog application with the following features:
-1. RESTful API with Express.js and MongoDB
-2. React front-end with component architecture
-3. Full CRUD functionality for blog posts
-4. User authentication and authorization
-5. Advanced features like image uploads and comments
+- [Project Overview](#project-overview)
+- [Features Implemented](#features-implemented)
+- [API Documentation](#api-documentation)
+  - [Authentication Endpoints](#authentication-endpoints)
+  - [Post Endpoints](#post-endpoints)
+  - [Category Endpoints](#category-endpoints)
+- [Setup Instructions](#setup-instructions)
+- [Technologies Used](#technologies-used)
+- [Screenshots](#screenshots) (Placeholder - Add your own screenshots here!)
 
-## Project Structure
+## Project Overview
 
+This application serves as a solution to a MERN stack assignment, demonstrating proper integration between MongoDB, Express.js, React.js, and Node.js. It features a robust backend API and a dynamic React frontend, offering a complete blog experience.
+
+## Features Implemented
+
+The application implements the following features:
+### 🔒 Authentication
+- User registration and login using JWT.
+- Passwords hashed using bcrypt.
+- Protected routes for creating, editing, and deleting posts.
+
+### 📝 Blog Posts
+- Create, read, update, and delete blog posts.
+- Add featured images.
+- Add and view comments on each post.
+
+### 🏷️ Categories
+- Create categories.
+- View posts by category.
+
+### 💬 Comments
+- Add comments to posts (authenticated users only).
+- Optimistic UI updates for comments for a better user experience.
+
+### Image Uploads
+- Upload featured images for blog posts.
+
+### Pagination
+- Paginated display of blog posts on the list page.
+
+### Searching and Filtering
+- Search posts by title.
+- Filter posts by category.
+
+### 🌐 Technical Implementation
+- Clear Directory Structure: Organized client and server directories following best practices.
+- MongoDB Integration: Uses Mongoose for object data modeling.
+- Express.js Backend: Robust RESTful API with necessary middleware (CORS, JSON parsing, error handling).
+- React.js Frontend: Built with Vite, utilizing React Router for navigation and React Hooks for state management.
+- Environment Variables: Configuration management using `.env` files.
+- Input Validation: Server-side input validation using `express-validator`.
+- Custom API Hook: A custom React hook (`useApi`) for efficient API calls and state management (loading, error).
+
+## API Documentation
+
+The backend exposes a RESTful API. All API endpoints are prefixed with `/api`.
+
+### Authentication Endpoints
+
+| Method | Endpoint        | Description                   | Protected | Body/Query Parameters                                     | Response Example                                                              |
+| :----- | :-------------- | :---------------------------- | :-------- | :-------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| `POST` | `/api/auth/register` | Register a new user           | No        | `username`, `email`, `password`                           | `{ message: "Registration successful", user: { _id, username, email, ... } }` |
+| `POST` | `/api/auth/login`    | Log in an existing user       | No        | `email`, `password`                                       | `{ token: "jwt_token", user: { _id, username, email, ... } }`                 |
+
+### Post Endpoints
+
+
+| Method | Endpoint                 | Description                             | Protected | Body/Query Parameters                                 | Response Example                                                                           |
+| :----- | :----------------------- | :-------------------------------------- | :-------- | :---------------------------------------------------- | :----------------------------------------------------------------------------------------- |
+| `GET`  | `/api/posts`             | Get all blog posts                      | No        | `page` (int), `limit` (int), `category` (id), `search` (string) | `{ posts: [...], totalPages: 5, currentPage: 1 }`                                      |
+| `GET`  | `/api/posts/:id`         | Get a specific blog post by ID or slug  | No        | None                                                  | `{ _id, title, content, featuredImage, category, author, comments, ... }`                  |
+| `POST` | `/api/posts`             | Create a new blog post                  | Yes       | `title`, `content`, `category`, `featuredImage` (file) | `{ _id, title, content, ... }`                                                             |
+| `PUT`  | `/api/posts/:id`         | Update an existing blog post            | Yes       | `title`, `content`, `category`, `featuredImage` (file) | `{ _id, title, content, ... }`                                                             |
+| `DELETE` | `/api/posts/:id`         | Delete a blog post                      | Yes       | None                                                  | `{ message: "Post deleted" }`                                                              |
+| `POST` | `/api/posts/:id/comments`| Add a comment to a specific blog post   | Yes       | `content`                                             | `{ _id, title, content, comments: [...], ... }`                                            |
+
+### Category Endpoints
+### Category Endpoints
+
+| Method | Endpoint             | Description             | Protected | Body/Query Parameters | Response Example                                     |
+| :----- | :------------------- | :---------------------- | :-------- | :-------------------- | :--------------------------------------------------- |
+| `GET`  | `/api/categories`    | Get all categories      | No        | None                  | `[{ _id, name, description, ... }]`                  |
+| `POST` | `/api/categories`    | Create a new category   | Yes       | `name`, `description` | `{ _id, name, description, ... }`                    |
+
+## Setup Instructions
+ **Clone the repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd mern-stack-integration-Maryann878
+    ```
+
+ **Set up environment variables:**
+    *   Create a `.env` file in the `server` directory and add your MongoDB URI, JWT secret, and port.
+    * Create a `.env` file in the `client` directory and add API base URL:
+    ```   VITE_API_BASE_URL=http://localhost:5000/api
 ```
-mern-blog/
-├── client/                 # React front-end
-│   ├── public/             # Static files
-│   ├── src/                # React source code
-│   │   ├── components/     # Reusable components
-│   │   ├── pages/          # Page components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── services/       # API services
-│   │   ├── context/        # React context providers
-│   │   └── App.jsx         # Main application component
-│   └── package.json        # Client dependencies
-├── server/                 # Express.js back-end
-│   ├── config/             # Configuration files
-│   ├── controllers/        # Route controllers
-│   ├── models/             # Mongoose models
-│   ├── routes/             # API routes
-│   ├── middleware/         # Custom middleware
-│   ├── utils/              # Utility functions
-│   ├── server.js           # Main server file
-│   └── package.json        # Server dependencies
-└── README.md               # Project documentation
-```
 
-## Getting Started
+**Install server dependencies:
+    Server Setup
+    ```bash
+    cd server
+    npm install
+    ```
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week4-Assignment.md` file
-4. Complete the tasks outlined in the assignment
+ **Install client dependencies:
+    Client Setup
+    ```bash
+    cd client
+    npm install
+    ```
 
-## Files Included
+**Start the development servers:**
+    *   In the `server` directory, run:
+        ```bash
+        npm run dev
+        ```
+    *   In a new terminal, navigate to the `client` directory and run:
+        ```bash
+        npm run dev
+        ```
 
-- `Week4-Assignment.md`: Detailed assignment instructions
-- Starter code for both client and server:
-  - Basic project structure
-  - Configuration files
-  - Sample models and components
+**Access the application:**
+    Open your web browser and go to `http://localhost:5173` (or the address provided by Vite).
 
-## Requirements
+## Technologies Used
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- npm or yarn
-- Git
+*   **Frontend:**
+    *   React.js
+    *   Vite
+    *   React Router
+    *   Axios
+    *   Tailwind CSS
+*   **Backend:**
+    *   Node.js
+    *   Express.js
+    *   MongoDB
+    *   Mongoose
+    *   bcryptjs (for password hashing)
+    *   jsonwebtoken (for authentication)
+    *   multer (for file uploads)
+    *   express-validator (for input validation)
+    *   dotenv (for environment variables)
 
-## Submission
+## Screenshots
+### Home Page
+![Home Page](client/public/homepage.png)
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+### Login Page
+![Login Page](client/public/login-page.png)
 
-1. Complete both the client and server portions of the application
-2. Implement all required API endpoints
-3. Create the necessary React components and hooks
-4. Document your API and setup process in the README.md
-5. Include screenshots of your working application
+### Register Page
+![Register Page](client/public/register-page.png)
+
+
+
 
 ## Resources
 
