@@ -150,13 +150,19 @@ The backend exposes a RESTful API. All API endpoints are prefixed with `/api`.
 
 ## Screenshots
 ### Home Page
-![Home Page](client/public/homepage.png)
+<a href="client/public/homepage.png" target="_blank">
+  <img src="client/public/homepage.png" alt="Home Page" width="700"/>
+</a>
 
 ### Login Page
-![Login Page](client/public/login-page.png)
+<a href="client/public/login-page.png" target="_blank">
+  <img src="client/public/login-page.png" alt="Login Page" width="700"/>
+</a>
 
 ### Register Page
-![Register Page](client/public/register-page.png)
+<a href="client/public/register-page.png" target="_blank">
+  <img src="client/public/register-page.png" alt="Register Page" width="700"/>
+</a>
 
 
 
